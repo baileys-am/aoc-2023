@@ -1,13 +1,30 @@
 {
     "version": "2.0.0",
+    "inputs":
+    [
+        {
+            "description": "Day to create",
+            "id": "day",
+            "type": "promptString",
+            "default": "day5part2"
+        }
+    ],
     "tasks": [
+        {
+            "label": "Create dotnet project",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "dotnet new console -n ${input:day} && cd ${input:day} && dotnet new gitignore"
+        },
         {
             "label": "build",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/day5/day5.csproj",
+                "${workspaceFolder}/${input:day}/${input:day}.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -19,7 +36,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/day5/day5.csproj",
+                "${workspaceFolder}/${input:day}/${input:day}.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -33,7 +50,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/day5/day5.csproj"
+                "${workspaceFolder}/${input:day}/${input:day}.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
