@@ -35,6 +35,7 @@ List<long> locations = [];
 for (int i = 0; i < seeds.Length; i++)
 {
     long finalDestination = top_map.GetFinalDestination(seeds[i]);
+    Console.WriteLine();
     locations.Add(finalDestination);
 }
 
@@ -89,9 +90,25 @@ class Map
 
     public long GetFinalDestination(long source)
     {
+        Console.Write($"{source} ");
         if (this.LinkedMap == null)
         {
-            return source;
+            List<long> mydestinations = [];
+            foreach (var range in this.Ranges)
+            {
+                if (range.TryGetDestination(source, out long linkedDestination))
+                {
+                    mydestinations.Add(linkedDestination);
+                }
+            }
+            if (mydestinations.Count != 0)
+            {
+                return mydestinations.Min();
+            }
+            else
+            {
+                return source;
+            }
         }
 
         List<long> destinations = [];
