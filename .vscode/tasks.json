@@ -16,7 +16,7 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "command": "dotnet new console -n ${input:day} && cd ${input:day} && dotnet new gitignore"
+            "command": "touch test/${input:day}.txt final/${input:day}.txt && dotnet new console -n ${input:day} && cp templates/Program.cs templates/InputModel.cs ${input:day} && cd ${input:day} && dotnet new gitignore"
         },
         {
             "label": "build",
