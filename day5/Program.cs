@@ -1,133 +1,36 @@
-﻿
-string[] fileLines = File.ReadAllLines(args[0]);
-
-// Parse array of seeds
-long[] seeds = fileLines[0].Split(' ').Where(s => long.TryParse(s, out _)).Select(s => long.Parse(s)).ToArray();
-
-// Parse maps
-Map top_map = new();
-Map current_map = top_map;
-bool reading_map = false;
-for (long i = 1; i < fileLines.Length; i++)
+﻿static void PartOne(PartOneInput input)
 {
-    string[] splits = fileLines[i].Split(' ');
-    if (!long.TryParse(splits[0], out _))
+    List<long> locations = [];
+    for (int i = 0; i < input.Seeds.Length; i++)
     {
-        if (reading_map)
+        long finalDestination = input.TopMap.GetFinalDestination(input.Seeds[i]);
+        locations.Add(finalDestination);
+    }
+    Console.WriteLine($"Part One Answer: {locations.Min()}");
+}
+
+static void PartTwo(PartTwoInput input)
+{
+    long minLocation = long.MaxValue;
+    for (int i = 0; i < input.SeedPairs.Count; i++)
+    {
+        Console.WriteLine($"Seed pair started: {i}");
+        for (long seed = input.SeedPairs[i].Start; seed < input.SeedPairs[i].Start + input.SeedPairs[i].Length; seed++)
         {
-            current_map.LinkedMap = new();
-            current_map = current_map.LinkedMap;
-        }
-        reading_map = false;
-        continue;
-    }
-    reading_map = true;
-    current_map.Ranges.Add(new()
-    {
-        DestinationRangeStart = long.Parse(splits[0]),
-        SourceRangeStart = long.Parse(splits[1]),
-        RangeLength = long.Parse(splits[2])
-    });
-}
-
-// Determine locations for each seed
-List<long> locations = [];
-for (int i = 0; i < seeds.Length; i++)
-{
-    long finalDestination = top_map.GetFinalDestination(seeds[i]);
-    Console.WriteLine();
-    locations.Add(finalDestination);
-}
-
-// Display min location result
-if (locations.Count != 0)
-{
-    Console.WriteLine($"Min location: {locations.Min()}");
-}
-else
-{
-    Console.WriteLine("No locations found!");
-}
-
-enum MapType {
-    SeedToSoil = 0,
-    SoilToFertilizer,
-    FertilizerToWater,
-    WaterToLight,
-    LightToTemperature,
-    TemperatureToHumidity,
-    HumidityToLocation
-}
-
-class MapRange
-{
-    public long DestinationRangeStart { get; set; }
-    public long SourceRangeStart { get; set; }
-    public long RangeLength { get; set; }
-
-    public bool TryGetDestination(long source, out long destination)
-    {
-        bool isValid = source >= this.SourceRangeStart && source <= this.SourceRangeStart + this.RangeLength;
-        destination = !isValid ? 0 : this.DestinationRangeStart + (source - this.SourceRangeStart);
-        return isValid;
-    }
-}
-
-class Map
-{
-    public List<MapRange> Ranges { get; set; } = [];
-
-    public Map? LinkedMap { get; set; }
-
-    public Map()
-    {
-    }
-
-    public Map(Map linkedMap)
-    {
-        this.LinkedMap = linkedMap;
-    }
-
-    public long GetFinalDestination(long source)
-    {
-        Console.Write($"{source} ");
-        if (this.LinkedMap == null)
-        {
-            List<long> mydestinations = [];
-            foreach (var range in this.Ranges)
+            long finalDestination = input.TopMap.GetFinalDestination(seed);
+            if (finalDestination < minLocation)
             {
-                if (range.TryGetDestination(source, out long linkedDestination))
-                {
-                    mydestinations.Add(linkedDestination);
-                }
-            }
-            if (mydestinations.Count != 0)
-            {
-                return mydestinations.Min();
-            }
-            else
-            {
-                return source;
+                minLocation = finalDestination;
+                Console.WriteLine($"New min location: {minLocation}");
             }
         }
-
-        List<long> destinations = [];
-        foreach (var range in this.Ranges)
-        {
-            if (range.TryGetDestination(source, out long linkedDestination))
-            {
-                long destination = this.LinkedMap.GetFinalDestination(linkedDestination);
-                destinations.Add(destination);
-            }
-        }
-
-        if (destinations.Count != 0)
-        {
-            return destinations.Min();
-        }
-        else
-        {
-            return this.LinkedMap.GetFinalDestination(source);
-        }
+        Console.WriteLine($"Seed pair finished: {i}");
     }
+    Console.WriteLine($"Part Two Answer: {minLocation}");
 }
+
+PartOneInput partOne = new(args[0]);
+PartOne(partOne);
+
+PartTwoInput partTwo = new(args[0]);
+PartTwo(partTwo);
