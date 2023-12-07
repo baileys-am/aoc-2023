@@ -1,6 +1,15 @@
 static void PartOne(PartOneInput input)
 {
-    Console.WriteLine($"Part One Answer: ");
+    var rankedHands = input.Hands.OrderBy(h => (long)h.HandType)
+                                 .ThenBy(h => h.Strength)
+                                 .ToList();
+    long totalWinnings = 0;
+    for (int i = 0; i < rankedHands.Count; i++)
+    {
+        totalWinnings += (i + 1) * rankedHands[i].Bid;
+    }
+
+    Console.WriteLine($"Part One Answer: {totalWinnings}");
 }
 
 static void PartTwo(PartTwoInput input)
