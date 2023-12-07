@@ -6,7 +6,7 @@
             "description": "Day to create",
             "id": "day",
             "type": "promptString",
-            "default": "day2"
+            "default": "day7"
         }
     ],
     "tasks": [
