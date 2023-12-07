@@ -1,11 +1,11 @@
 static void PartOne(PartOneInput input)
 {
-    Console.WriteLine($"Part One Answer: ");
+    Console.WriteLine($"Part One Answer: {input.CalibrationValues.Sum()}");
 }
 
 static void PartTwo(PartTwoInput input)
 {
-    Console.WriteLine($"Part Two Answer: ");
+    Console.WriteLine($"Part Two Answer: {input.CalibrationValues.Sum()}");
 }
 
 Console.WriteLine("Running part one...");
