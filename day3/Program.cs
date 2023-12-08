@@ -17,7 +17,30 @@ static void PartOne(PartOneInput input)
 
 static void PartTwo(PartTwoInput input)
 {
-    Console.WriteLine($"Part Two Answer: ");
+    long gearRatioSum = 0;
+    foreach (var symbol in input.Symbols)
+    {
+        int adjacentPartCount = 0;
+        long gearRatio = 1;
+        foreach (var part in input.PartNumbers)
+        {
+            if (symbol.IsAdjacentTo(part))
+            {
+                adjacentPartCount++;
+                gearRatio *= part.Number;
+                if (adjacentPartCount > 2)
+                {
+                    break;
+                }
+            }
+        }
+
+        if (adjacentPartCount == 2)
+        {
+            gearRatioSum += gearRatio;
+        }
+    }
+    Console.WriteLine($"Part One Answer: {gearRatioSum}");
 }
 
 Console.WriteLine("Running part one...");
