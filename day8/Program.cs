@@ -1,6 +1,23 @@
 static void PartOne(PartOneInput input)
 {
-    Console.WriteLine($"Part One Answer: ");
+    string start = "AAA";
+    string end = "ZZZ";
+    string currentPosition = start;
+    int currentInstruction = 0;
+    long stepCount = 0;
+    while (currentPosition != end)
+    {
+        stepCount++;
+        currentPosition = input.Instructions[currentInstruction] switch
+        {
+            'L' => input.Nodes[currentPosition].LeftNode,
+            'R' => input.Nodes[currentPosition].RightNode,
+            _ => throw new Exception("oops!")
+        };
+        currentInstruction = currentInstruction + 1 >= input.Instructions.Length ? 0 : currentInstruction + 1;
+    }
+
+    Console.WriteLine($"Part One Answer: {stepCount}");
 }
 
 static void PartTwo(PartTwoInput input)
