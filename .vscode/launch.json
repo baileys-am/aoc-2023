@@ -9,7 +9,7 @@
             "description": "Day to debug",
             "id": "day",
             "type": "promptString",
-            "default": "day7"
+            "default": "day3"
         }
     ],
     "configurations": [

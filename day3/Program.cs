@@ -1,6 +1,18 @@
 static void PartOne(PartOneInput input)
 {
-    Console.WriteLine($"Part One Answer: ");
+    long partNumSum = 0;
+    foreach (var part in input.PartNumbers)
+    {
+        foreach (var symbol in input.Symbols)
+        {
+            if (part.IsAdjacentTo(symbol))
+            {
+                partNumSum += part.Number;
+                break;
+            }
+        }
+    }
+    Console.WriteLine($"Part One Answer: {partNumSum}");
 }
 
 static void PartTwo(PartTwoInput input)
