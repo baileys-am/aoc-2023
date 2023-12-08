@@ -1,6 +1,11 @@
 static void PartOne(PartOneInput input)
 {
-    Console.WriteLine($"Part One Answer: ");
+    long cardPointsSum = 0;
+    foreach (var card in input.Scratchcards)
+    {
+        cardPointsSum += card.CalculatePoints();
+    }
+    Console.WriteLine($"Part One Answer: {cardPointsSum}");
 }
 
 static void PartTwo(PartTwoInput input)
