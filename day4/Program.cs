@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 static void PartOne(PartOneInput input)
 {
     long cardPointsSum = 0;
@@ -10,7 +12,12 @@ static void PartOne(PartOneInput input)
 
 static void PartTwo(PartTwoInput input)
 {
-    Console.WriteLine($"Part Two Answer: ");
+    long cardCount = 0;
+    for (int i = 0; i < input.Scratchcards.Count; i++)
+    {
+        cardCount += 1 + input.CardCeption(i);
+    }
+    Console.WriteLine($"Part Two Answer: {cardCount}");
 }
 
 Console.WriteLine("Running part one...");
