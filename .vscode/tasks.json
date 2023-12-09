@@ -1,7 +1,6 @@
 {
     "version": "2.0.0",
-    "inputs":
-    [
+    "inputs": [
         {
             "description": "Day to create",
             "id": "day",
