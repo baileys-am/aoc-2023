@@ -1,11 +1,21 @@
 static void PartOne(PartOneInput input)
 {
-    Console.WriteLine($"Part One Answer: ");
+    long extrapSum = 0;
+    foreach (var value in input.Values)
+    {
+        extrapSum += value.Extrapolate();
+    }
+    Console.WriteLine($"Part One Answer: {extrapSum}");
 }
 
 static void PartTwo(PartTwoInput input)
 {
-    Console.WriteLine($"Part Two Answer: ");
+    long extrapSum = 0;
+    foreach (var value in input.Values)
+    {
+        extrapSum += value.ExtrapolateBackwards();
+    }
+    Console.WriteLine($"Part OnTwo Answer: {extrapSum}");
 }
 
 Console.WriteLine("Running part one...");
