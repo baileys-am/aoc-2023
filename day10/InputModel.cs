@@ -11,6 +11,7 @@ class Map(List<string> rows)
 {
     public List<string> Rows { get; set; } = rows;
     public List<string> CountRows { get; set; } = [.. rows];
+    public List<string> MaskRows { get; set; } = rows.Select(r => new string('.', r.Length)).ToList();
 
     public List<((int, int), Direction)> FindConnections((int, int) loc, Direction direction)
     {
@@ -128,6 +129,13 @@ class Map(List<string> rows)
         this.CountRows[y] = $"{this.CountRows[y][..x]}{count}{this.CountRows[y][(x + 1)..]}";
     }
 
+    public void SetMask((int, int) loc, char mask)
+    {
+        int x = loc.Item1;
+        int y = loc.Item2;
+        this.MaskRows[y] = $"{this.MaskRows[y][..x]}{mask}{this.MaskRows[y][(x + 1)..]}";
+    }
+
     public void Print()
     {
         Console.WriteLine("Map count:");
@@ -135,6 +143,20 @@ class Map(List<string> rows)
         {
             Console.WriteLine(row);
         }
+    }
+
+    public void PrintMask()
+    {
+        Console.WriteLine("Map mask:");
+        foreach (var row in this.MaskRows)
+        {
+            Console.WriteLine(row);
+        }
+    }
+
+    public int CountEnclosedTiles()
+    {
+        return 0;
     }
 }
 
@@ -152,10 +174,12 @@ class PartOneInput
 
 class PartTwoInput
 {
+    public Map Map { get; set; }
 
     public PartTwoInput(string filepath)
     {
         // Parse
         string[] fileLines = File.ReadAllLines(filepath);
+        this.Map = new([.. fileLines]);
     }
 }
