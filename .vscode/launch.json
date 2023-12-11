@@ -8,7 +8,7 @@
             "description": "Day to create",
             "id": "day",
             "type": "promptString",
-            "default": "day10"
+            "default": "day11"
         }
     ],
     "configurations": [
